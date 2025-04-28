@@ -1,5 +1,5 @@
 #include "song.h"
-#include "list.h"
+#include "library.h"
 
 int main(int argc, char* argv[]) {
 
@@ -16,9 +16,9 @@ int main(int argc, char* argv[]) {
 
     printf("\n");
 
-    List* l = readFromFile("library.txt");
-    printList(l);
-    freeList(l);
+    Library* l = readFromFile("library.txt");
+    printLibrary(l);
+    freeLibrary(l);
 
     return 0;
 }

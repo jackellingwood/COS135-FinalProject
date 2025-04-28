@@ -1,13 +1,13 @@
-#include "list.h"
+#include "library.h"
 #include "song.h"
 
-List* readFromFile(char* path) {
+Library* readFromFile(char* path) {
 
-    List* n = malloc(sizeof(List));
+    Library* n = malloc(sizeof(Library));
 
     n->size = 0;
-    n->maxSize = INIT_LIST_MAX_SIZE;
-    n->songs = malloc(sizeof(Song*) * INIT_LIST_MAX_SIZE);
+    n->maxSize = INIT_LIBRARY_MAX_SIZE;
+    n->songs = malloc(sizeof(Song*) * INIT_LIBRARY_MAX_SIZE);
 
     FILE* f = fopen(path, "r");
     if (f == NULL) {
@@ -49,31 +49,31 @@ List* readFromFile(char* path) {
     return n;
 }
 
-void addSong(List* list, Song* song) {
-    if (list->size == list->maxSize) {
+void addSong(Library* library, Song* song) {
+    if (library->size == library->maxSize) { // realloc library if needed
         Song** temp;
-        list->maxSize *= 2;
-        temp = realloc(list->songs, sizeof(Song*) * list->maxSize);
+        library->maxSize *= 2;
+        temp = realloc(library->songs, sizeof(Song*) * library->maxSize);
         if (temp != NULL) {
-            list->songs = temp;
+            library->songs = temp;
         }
     }
-    list->songs[list->size++] = song;
+    library->songs[library->size++] = song;
 }
 
-int editSong(List* list, Song* song) {}
-int removeSong(List* list, Song* song) {}
+int editSong(Library* library, char* name) {}
+int removeSong(Library* library, char* name) {}
 
-void printList(List* list) {
-    for (int i = 0; i < list->size; i++) {
-        printSong(list->songs[i]);
+void printLibrary(Library* library) {
+    for (int i = 0; i < library->size; i++) {
+        printSong(library->songs[i]);
     }
 }
 
-void freeList(List* list) {
-    for (int i = 0; i < list->size; i++) {
-        freeSong(list->songs[i]);
+void freeLibrary(Library* library) {
+    for (int i = 0; i < library->size; i++) {
+        freeSong(library->songs[i]);
     }
-    free(list->songs);
-    free(list);
+    free(library->songs);
+    free(library);
 }
