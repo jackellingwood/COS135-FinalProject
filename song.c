@@ -1,15 +1,17 @@
 #include "song.h"
 
-Song* createSong(char* name, int numTags, char** tags) {
+Song* createSong(char* name, int numTags, char** tags) { //TODO: is there a way to get this list of lists here without malloc'ing it outside?
     Song* n = malloc(sizeof(Song));
 
     strcpy(n->name, name);
 
     n->numTags = numTags;
+    n->tags = tags;
 
-    for (int i = 0; i < n->numTags; i++) {
-        strcpy(n->tags[i], tags[i + 2]);
-    }
+    // for (int i = 0; i < n->numTags; i++) {
+    //     n->tags[i] = malloc(sizeof(char) * MAX_TAG_LENGTH);
+    //     strcpy(n->tags[i], tags[i + 2]);
+    // }
 
     return n;
 }
@@ -23,5 +25,9 @@ void printSong(Song* song) {
 }
 
 void freeSong(Song* song) {
+    for (int i = 0; i < song->numTags; i++) {
+        free(song->tags[i]);
+    }
+    free(song->tags);
     free(song);
 }

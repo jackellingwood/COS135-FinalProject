@@ -11,7 +11,7 @@
 typedef struct Song {
     char name[MAX_NAME_LENGTH];
     int numTags;
-    char tags[MAX_TAGS][MAX_TAG_LENGTH];
+    char** tags;
 } Song;
 
 Song* createSong(char* name, int numTags, char** tags);
