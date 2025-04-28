@@ -4,13 +4,13 @@
 int main(int argc, char* argv[]) {
 
     // demo of how I could take tags from input
-    char** cmdArgs = malloc(sizeof(char*) * MAX_TAGS);
+    char** cmdTags = malloc(sizeof(char*) * MAX_TAGS);
     for (int i = 0; i < argc - 2; i++) {
-        cmdArgs[i] = malloc(sizeof(char) * MAX_TAG_LENGTH);
-        strcpy(cmdArgs[i], argv[i + 2]);
+        cmdTags[i] = malloc(sizeof(char) * MAX_TAG_LENGTH);
+        strcpy(cmdTags[i], argv[i + 2]);
     }
 
-    Song* s = createSong(argv[1], argc - 2, cmdArgs);
+    Song* s = createSong(argv[1], argc - 2, cmdTags);
     printSong(s);
     freeSong(s);
 
