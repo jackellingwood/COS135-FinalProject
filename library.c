@@ -26,17 +26,15 @@ Library* readFromFile(char* path) {
         ptr = buffer;
         while(isspace(*ptr)) ptr++;
 
-        //TODO: the problem may be that the below variables do not point to malloc'd memory
+        char* name = strtok(ptr, ":");
 
-        char* name = strtok(ptr, ": ");
-
-        char* tag = strtok(NULL, ", ");
+        char* tag = strtok(NULL, ",");
         int numTags = 0;
         char** tags = malloc(sizeof(char*) * MAX_TAGS);
         while (tag != NULL) {
             tags[numTags] = malloc(sizeof(char) * MAX_TAG_LENGTH);
             strcpy(tags[numTags], tag);
-            tag = strtok(NULL, ", ");
+            tag = strtok(NULL, ",");
             numTags++;
         }
 
@@ -51,6 +49,7 @@ Library* readFromFile(char* path) {
 
 void addSong(Library* library, Song* song) {
     if (library->size == library->maxSize) { // realloc library if needed
+        printf("Resizing arr\n");
         Song** temp;
         library->maxSize *= 2;
         temp = realloc(library->songs, sizeof(Song*) * library->maxSize);
@@ -61,8 +60,57 @@ void addSong(Library* library, Song* song) {
     library->songs[library->size++] = song;
 }
 
-int editSong(Library* library, char* name) {}
-int removeSong(Library* library, char* name) {}
+int editSong(Library* library, char* name, char* newName, int numNewTags, char** newTags) {
+    // search through songs
+    // if song if found, free it and replace the pointer with the new info
+
+    for (int i = 0; i < library->size; i++) {
+        if (strcmp(library->songs[i]->name, name) == 0) { // if strings are equal
+            freeSong(library->songs[i]);
+            library->songs[i] = createSong(newName, numNewTags, newTags);
+
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int removeSong(Library* library, char* name) {
+    // iterate through songs
+    // if song is found, free it and shift all of the songs back one
+
+    int i = 0;
+    while (i < library->size) {
+        if (strcmp(library->songs[i]->name, name) == 0) {
+            freeSong(library->songs[i]);
+            break;
+        }
+        i++;
+    }
+
+    if (i == library->size) {
+        return 1;
+    }
+
+    for (int j = i + 1; j < library->size; j++) {
+        library->songs[j - 1] = library->songs[j];
+    }
+
+    library->size--;
+
+    if (library->size <= library->maxSize / 2) {
+        printf("Downsizing arr\n");
+        Song** temp;
+        library->maxSize /= 2;
+        temp = realloc(library->songs, sizeof(Song*) * library->maxSize);
+        if (temp != NULL) {
+            library->songs = temp;
+        }
+    }
+
+    return 0;
+}
 
 void printLibrary(Library* library) {
     for (int i = 0; i < library->size; i++) {

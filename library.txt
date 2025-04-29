@@ -1,3 +1,4 @@
-something: or, other
-dark: ambient
-joker: pop, fun, bubbly
+dark:ambient
+joker:pop,fun,bubbly
+maybe:i'm,crazy
+or:maybe not

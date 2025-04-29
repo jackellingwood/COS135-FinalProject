@@ -1,3 +1,6 @@
+run: database
+	./database something or other
+
 database: main.o song.o library.o
 	gcc main.o song.o library.o -o database
 
@@ -15,3 +18,6 @@ clean:
 	rm song.o
 	rm library.o
 	rm main.o
+
+val:
+	valgrind ./database something or other

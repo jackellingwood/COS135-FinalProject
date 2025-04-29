@@ -12,11 +12,20 @@ int main(int argc, char* argv[]) {
 
     Song* s = createSong(argv[1], argc - 2, cmdTags);
     printSong(s);
-    freeSong(s);
 
     printf("\n");
 
     Library* l = readFromFile("library.txt");
+    addSong(l, s);
+    removeSong(l, "something");
+    removeSong(l, "maybe");
+    removeSong(l, "joker");
+
+    char** evilTags = malloc(sizeof(char*) * MAX_TAGS);
+    evilTags[0] = malloc(sizeof(char) * MAX_TAG_LENGTH);
+    strcpy(evilTags[0], "shadow");
+
+    editSong(l, "dark", "evil", 1, evilTags);
     printLibrary(l);
     freeLibrary(l);
 

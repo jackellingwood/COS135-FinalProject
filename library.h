@@ -14,7 +14,7 @@ typedef struct Library {
 
 Library* readFromFile(char* path);
 void addSong(Library* library, Song* song);
-int editSong(Library* library, char* name);
+int editSong(Library* library, char* name, char* newName, int numNewTags, char** newTags);
 int removeSong(Library* library, char* name);
 void printLibrary(Library* library);
 void freeLibrary(Library* library);
