@@ -27,6 +27,9 @@ int main(int argc, char* argv[]) {
 
     editSong(l, "dark", "evil", 1, evilTags);
     printLibrary(l);
+    sortLibrary(l);
+    printf("\n");
+    printLibrary(l);
     freeLibrary(l);
 
     return 0;

@@ -49,7 +49,7 @@ Library* readFromFile(char* path) {
 
 void addSong(Library* library, Song* song) {
     if (library->size == library->maxSize) { // realloc library if needed
-        printf("Resizing arr\n");
+        printf("Resizing arr: old:%d new:%d\n", library->maxSize, library->maxSize * 2);
         Song** temp;
         library->maxSize *= 2;
         temp = realloc(library->songs, sizeof(Song*) * library->maxSize);
@@ -100,7 +100,7 @@ int removeSong(Library* library, char* name) {
     library->size--;
 
     if (library->size <= library->maxSize / 2) {
-        printf("Downsizing arr\n");
+        printf("Downsizing arr: old:%d new:%d\n", library->maxSize, library->maxSize / 2);
         Song** temp;
         library->maxSize /= 2;
         temp = realloc(library->songs, sizeof(Song*) * library->maxSize);
@@ -110,6 +110,21 @@ int removeSong(Library* library, char* name) {
     }
 
     return 0;
+}
+
+void sortLibrary(Library* library) { // bubble sort
+    int swaps = 0;
+    do { // continue until sorted
+        swaps = 0;
+        for (int i = 0; i < library->size - 1; i++) { // iterate through library
+            if (strcmp(library->songs[i]->name, library->songs[i + 1]->name) > 0) {
+                Song* temp = library->songs[i];
+                library->songs[i] = library->songs[i + 1];
+                library->songs[i + 1] = temp;
+                swaps++;
+            }
+        }
+    } while (swaps > 0);
 }
 
 void printLibrary(Library* library) {
