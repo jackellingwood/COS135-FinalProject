@@ -15,5 +15,6 @@ typedef struct Song {
 } Song;
 
 Song* createSong(char* name, int numTags, char** tags);
+Song* copySong(Song* c);
 void printSong(Song* song);
 void freeSong(Song* song);

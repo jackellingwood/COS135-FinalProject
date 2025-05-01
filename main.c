@@ -16,6 +16,9 @@ int main(int argc, char* argv[]) {
     printf("\n");
 
     Library* l = readFromFile("library.txt");
+    printLibrary(l);
+    printf("\n");
+
     addSong(l, s);
     removeSong(l, "something");
     removeSong(l, "maybe");

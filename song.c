@@ -11,6 +11,15 @@ Song* createSong(char* name, int numTags, char** tags) {
     return n;
 }
 
+Song* copySong(Song* c) {
+    char** copiedTags = malloc(sizeof(char*) * c->numTags);
+    for (int j = 0; j < c->numTags; j++) { // copy tags
+        copiedTags[j] = malloc(sizeof(char) * MAX_TAG_LENGTH);
+        strcpy(copiedTags[j], c->tags[j]);
+    }
+    return createSong(c->name, c->numTags, copiedTags);
+}
+
 void printSong(Song* song) {
     printf("%s: ", song->name);
     for (int i = 0; i < song->numTags - 1; i++) {
