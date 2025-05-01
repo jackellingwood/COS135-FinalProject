@@ -17,6 +17,7 @@ void printSong(Song* song) {
         printf("%s, ", song->tags[i]);
     }
     printf("%s\n", song->tags[song->numTags - 1]);
+    // printf("%s: %d tags\n", song->tags[song->numTags - 1], song->numTags);
 }
 
 void freeSong(Song* song) {

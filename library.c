@@ -47,6 +47,28 @@ Library* readFromFile(char* path) {
     return n;
 }
 
+Library* copyLibrary(Library* c) {
+    Library* n = malloc(sizeof(Library));
+
+    // copy basic details
+    n->size = 0;
+    n->maxSize = INIT_LIBRARY_MAX_SIZE;
+    n->songs = malloc(sizeof(Song*) * INIT_LIBRARY_MAX_SIZE);
+
+    // copy songs
+    for (int i = 0; i < c->size; i++) {
+        Song* songToCopy = c->songs[i];
+        char** copiedTags = malloc(sizeof(char*) * songToCopy->numTags);
+        for (int j = 0; j < songToCopy->numTags; j++) { // copy tags
+            copiedTags[j] = malloc(sizeof(char) * MAX_TAG_LENGTH);
+            strcpy(copiedTags[j], songToCopy->tags[j]);
+        }
+        addSong(n, createSong(songToCopy->name, songToCopy->numTags, copiedTags));
+    }
+
+    return n;
+}
+
 void addSong(Library* library, Song* song) {
     if (library->size == library->maxSize) { // realloc library if needed
         printf("Resizing arr: old:%d new:%d\n", library->maxSize, library->maxSize * 2);

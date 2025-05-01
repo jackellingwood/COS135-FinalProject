@@ -30,7 +30,11 @@ int main(int argc, char* argv[]) {
     sortLibrary(l);
     printf("\n");
     printLibrary(l);
+    printf("\n");
+    Library* c = copyLibrary(l);
+    printLibrary(c);
     freeLibrary(l);
+    freeLibrary(c);
 
     return 0;
 }
