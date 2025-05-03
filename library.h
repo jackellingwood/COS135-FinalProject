@@ -20,5 +20,6 @@ void addSong(Library* library, Song* song);
 int editSong(Library* library, char* name, char* newName, int numNewTags, char** newTags);
 int removeSong(Library* library, char* name);
 void sortLibrary(Library* library);
+void saveToFile(Library* library, char* path);
 void printLibrary(Library* library);
 void freeLibrary(Library* library);

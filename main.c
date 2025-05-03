@@ -36,6 +36,9 @@ int main(int argc, char* argv[]) {
     printf("\n");
     Library* c = copyLibrary(l);
     printLibrary(c);
+
+    saveToFile(c, "newLibrary.txt");
+
     freeLibrary(l);
     freeLibrary(c);
 

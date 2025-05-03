@@ -144,6 +144,22 @@ void sortLibrary(Library* library) { // bubble sort
     } while (swaps > 0);
 }
 
+void saveToFile(Library* library, char* path) {
+
+    FILE* f = fopen(path, "w");
+
+    for (int i = 0; i < library->size; i++) {
+        Song* songToAdd = library->songs[i];
+        fprintf(f, "%s:", songToAdd->name);
+        for (int i = 0; i < songToAdd->numTags - 1; i++) {
+            fprintf(f, "%s,", songToAdd->tags[i]);
+        }
+        fprintf(f, "%s\n", songToAdd->tags[songToAdd->numTags - 1]);
+    }
+
+    fclose(f);
+}
+
 void printLibrary(Library* library) {
     for (int i = 0; i < library->size; i++) {
         printSong(library->songs[i]);
