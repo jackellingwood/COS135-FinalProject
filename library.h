@@ -1,5 +1,6 @@
 #pragma once
 
+#include "helpers.h"
 #include "song.h"
 
 #include <ctype.h>
@@ -14,8 +15,8 @@ typedef struct Library {
 
 Library* readFromFile(char* path);
 Library* copyLibrary(Library* c);
-Library* containsTags(Library* library, char** tags);
-Library* anyTags(Library* library, char** tags);
+Library* containsTags(Library* library, char** tags, int numTags);
+Library* anyTags(Library* library, char** tags, int numTags);
 void addSong(Library* library, Song* song);
 int editSong(Library* library, char* name, char* newName, int numNewTags, char** newTags);
 int removeSong(Library* library, char* name);

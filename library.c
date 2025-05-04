@@ -1,5 +1,5 @@
 #include "library.h"
-#include "song.h"
+
 
 Library* readFromFile(char* path) {
 
@@ -59,6 +59,24 @@ Library* copyLibrary(Library* c) {
     for (int i = 0; i < c->size; i++) {
         Song* songToCopy = c->songs[i];
         addSong(n, copySong(songToCopy));
+    }
+
+    return n;
+}
+
+Library* containsTags(Library* library, char* tags[], int numTags) {
+    Library* n = malloc(sizeof(Library));
+
+    n->size = 0;
+    n->maxSize = INIT_LIBRARY_MAX_SIZE;
+    n->songs = malloc(sizeof(Song*) * INIT_LIBRARY_MAX_SIZE);
+
+    int size = 0;
+    for (int i = 0; i < library->size; i++) {
+        Song* songToCmp = library->songs[i];
+        if (isTagSubset(songToCmp->tags, songToCmp->numTags, tags, numTags)) {
+            addSong(n, copySong(songToCmp));
+        }
     }
 
     return n;
