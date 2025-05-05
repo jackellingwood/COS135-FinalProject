@@ -1,7 +1,7 @@
 dark:ambient,pop
 something:else
 maybe:i'm,crazy
-bronze:fun,pop
+bronze:pop,fun
 evi:l
 or:maybe not
-joker:pop,fun,bubbly
+joker:fun,bubbly

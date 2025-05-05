@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
 
     char** evilTags = malloc(sizeof(char*) * MAX_TAGS);
     evilTags[0] = malloc(sizeof(char) * MAX_TAG_LENGTH);
-    strcpy(evilTags[0], "shadow");
+    strcpy(evilTags[0], "pop");
 
     editSong(l, "dark", "evil", 1, evilTags);
     printLibrary(l);
@@ -37,13 +37,24 @@ int main(int argc, char* argv[]) {
     saveToFile(c, "newLibrary.txt");
 
     printf("\n");
+
+    printLibrary(l);
+
+    printf("\n");
+
     char* tagsToCmp[] = {"fun", "pop"};
     Library* m = containsTags(l, tagsToCmp, 2);
     printLibrary(m);
 
+    printf("\n");
+
+    Library* n = anyTags(l, tagsToCmp, 2);
+    printLibrary(n);
+
     freeLibrary(l);
     freeLibrary(c);
     freeLibrary(m);
+    freeLibrary(n);
 
     return 0;
 }
