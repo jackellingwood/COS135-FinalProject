@@ -1,6 +1,5 @@
 #include "library.h"
 
-
 Library* readFromFile(char* path) {
 
     Library* n = malloc(sizeof(Library));
@@ -10,7 +9,7 @@ Library* readFromFile(char* path) {
     n->songs = malloc(sizeof(Song*) * INIT_LIBRARY_MAX_SIZE);
 
     FILE* f = fopen(path, "r");
-    if (f == NULL) { // if file doesn't exist, create new file and return library
+    if (f == NULL) { // if file doesn't exist, create new file and return empty library
         f = fopen(path, "w+");
     } else {
         char buffer[1024];
@@ -55,9 +54,8 @@ Library* copyLibrary(Library* c) {
     n->songs = malloc(sizeof(Song*) * INIT_LIBRARY_MAX_SIZE);
 
     // copy songs
-    for (int i = 0; i < c->size; i++) {
-        Song* songToCopy = c->songs[i];
-        addSong(n, copySong(songToCopy));
+    for (Song** songToCopy = c->songs; songToCopy < c->songs + c->size; songToCopy++) {
+        addSong(n, copySong(*songToCopy));
     }
 
     return n;
@@ -139,7 +137,7 @@ int removeSong(Library* library, char* name) {
         i++;
     }
 
-    if (i == library->size) {
+    if (i == library->size) { // didn't find song, exit with error
         return 1;
     }
 

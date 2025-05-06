@@ -23,10 +23,10 @@ Song* copySong(Song* c) {
 void printSong(Song* song) {
     printf("%s: ", song->name);
     if (song->numTags != 0) {
-        for (int i = 0; i < song->numTags - 1; i++) {
+        for (int i = 0; i < song->numTags - 1; i++) { // print every tag with a comma...
             printf("%s, ", song->tags[i]);
         }
-        printf("%s", song->tags[song->numTags - 1]);
+        printf("%s", song->tags[song->numTags - 1]); // except the last one
     }
     printf("\n");
 }

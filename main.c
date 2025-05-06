@@ -144,6 +144,8 @@ int main(int argc, char* argv[]) {
             } else {
                 saveToFile(l, song);
             }
+        } else {
+            printf("Unrecognized command: \"%s\"", command);
         }
     }
 
