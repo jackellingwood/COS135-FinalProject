@@ -22,11 +22,13 @@ Song* copySong(Song* c) {
 
 void printSong(Song* song) {
     printf("%s: ", song->name);
-    for (int i = 0; i < song->numTags - 1; i++) {
-        printf("%s, ", song->tags[i]);
+    if (song->numTags != 0) {
+        for (int i = 0; i < song->numTags - 1; i++) {
+            printf("%s, ", song->tags[i]);
+        }
+        printf("%s", song->tags[song->numTags - 1]);
     }
-    printf("%s\n", song->tags[song->numTags - 1]);
-    // printf("%s: %d tags\n", song->tags[song->numTags - 1], song->numTags);
+    printf("\n");
 }
 
 void freeSong(Song* song) {
