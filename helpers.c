@@ -101,3 +101,16 @@ int isAnyTagIn(char** a, int aSize, char** b, int bSize) {
     freeStrings(copyB, bSize);
     return 0;
 }
+
+// by Dan Bernstein from http://www.cse.yorku.ca/~oz/hash.html
+// recommended for the same use case as https://stackoverflow.com/questions/4014827/how-can-i-compare-strings-in-c-using-a-switch-statement
+unsigned long djb2Hash(unsigned char* str) {
+    unsigned long hash = 5381;
+    int c;
+
+    while (c = *str++)
+        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+
+    return hash;
+}
+
