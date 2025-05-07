@@ -1,5 +1,9 @@
+// song.c
+// contains all functions that can act on a Song struct
+
 #include "song.h"
 
+// return a Song* with the given information
 Song* createSong(char* name, int numTags, char** tags) {
     Song* n = malloc(sizeof(Song));
 
@@ -11,6 +15,7 @@ Song* createSong(char* name, int numTags, char** tags) {
     return n;
 }
 
+// return a deep copy of the given Song*
 Song* copySong(Song* c) {
     char** copiedTags = malloc(sizeof(char*) * c->numTags);
     for (int j = 0; j < c->numTags; j++) { // copy tags
@@ -20,6 +25,7 @@ Song* copySong(Song* c) {
     return createSong(c->name, c->numTags, copiedTags);
 }
 
+// print name and tags of the given Song*
 void printSong(Song* song) {
     printf("%s: ", song->name);
     if (song->numTags != 0) {
@@ -31,6 +37,7 @@ void printSong(Song* song) {
     printf("\n");
 }
 
+// free all attributes of the given Song*
 void freeSong(Song* song) {
     for (int i = 0; i < song->numTags; i++) {
         free(song->tags[i]);

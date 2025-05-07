@@ -1,5 +1,10 @@
+// library.c
+// contains all functions that can act on a Library struct
+
 #include "library.h"
 
+// parses a Library from the given txt file or creates a txt file if one doesn't exist
+// returns Library*, either filled with songs or empty
 Library* readFromFile(char* path) {
 
     Library* n = malloc(sizeof(Library));
@@ -45,6 +50,7 @@ Library* readFromFile(char* path) {
     return n;
 }
 
+// performs a deep copy on the given library and returns the pointer to the new Library*
 Library* copyLibrary(Library* c) {
     Library* n = malloc(sizeof(Library));
 
@@ -61,6 +67,7 @@ Library* copyLibrary(Library* c) {
     return n;
 }
 
+// filters out songs that do not contain all of the given tags and returns the resulting new Library*
 Library* containsTags(Library* library, char* tags[], int numTags) {
     Library* n = malloc(sizeof(Library));
 
@@ -78,6 +85,7 @@ Library* containsTags(Library* library, char* tags[], int numTags) {
     return n;
 }
 
+// filters out songs that do not contain any of the given tags and returns the resulting new Library*
 Library* anyTags(Library* library, char* tags[], int numTags) {
     Library* n = malloc(sizeof(Library));
 
@@ -95,6 +103,7 @@ Library* anyTags(Library* library, char* tags[], int numTags) {
     return n;
 }
 
+// adds the given Song to the given Library, realloc'ing to double the size if necessary
 void addSong(Library* library, Song* song) {
     if (library->size == library->maxSize) { // realloc library if needed
         // printf("Resizing arr: old:%d new:%d\n", library->maxSize, library->maxSize * 2);
@@ -108,6 +117,8 @@ void addSong(Library* library, Song* song) {
     library->songs[library->size++] = song;
 }
 
+// edits the Song with the given name in the given Library to contain new information
+// returns 0 if successful, 1 if song was not found
 int editSong(Library* library, char* name, char* newName, int numNewTags, char** newTags) {
     // search through songs
     // if song if found, free it and replace the pointer with the new info
@@ -124,6 +135,9 @@ int editSong(Library* library, char* name, char* newName, int numNewTags, char**
     return 1;
 }
 
+// removes the Song with the given name in the given Library and shifts all Songs in the Library back one
+// realloc's the Library to half of the current size if possible 
+// returns 0 if successful, 1 if song was not found
 int removeSong(Library* library, char* name) {
     // iterate through songs
     // if song is found, free it and shift all of the songs back one
@@ -160,6 +174,7 @@ int removeSong(Library* library, char* name) {
     return 0;
 }
 
+// sorts the Songs in the given Library by name using bubble sort
 void sortLibrary(Library* library) { // bubble sort
     int swaps = 0;
     do { // continue until sorted
@@ -175,6 +190,7 @@ void sortLibrary(Library* library) { // bubble sort
     } while (swaps > 0);
 }
 
+// saves the Library to the given txt file
 void saveToFile(Library* library, char* path) {
 
     FILE* f = fopen(path, "w");
@@ -182,21 +198,26 @@ void saveToFile(Library* library, char* path) {
     for (int i = 0; i < library->size; i++) {
         Song* songToAdd = library->songs[i];
         fprintf(f, "%s:", songToAdd->name);
-        for (int i = 0; i < songToAdd->numTags - 1; i++) {
-            fprintf(f, "%s,", songToAdd->tags[i]);
+        if (songToAdd->numTags > 1) {
+            for (int i = 0; i < songToAdd->numTags - 1; i++) {
+                fprintf(f, "%s,", songToAdd->tags[i]);
+            }
+            fprintf(f, "%s", songToAdd->tags[songToAdd->numTags - 1]);
         }
-        fprintf(f, "%s\n", songToAdd->tags[songToAdd->numTags - 1]);
+        fprintf(f, "\n");
     }
 
     fclose(f);
 }
 
+// print all songs in the given library
 void printLibrary(Library* library) {
     for (int i = 0; i < library->size; i++) {
         printSong(library->songs[i]);
     }
 }
 
+// frees all attributes of the given Library
 void freeLibrary(Library* library) {
     for (int i = 0; i < library->size; i++) {
         freeSong(library->songs[i]);

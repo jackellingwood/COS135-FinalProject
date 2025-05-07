@@ -1,8 +1,13 @@
+// main.c
+// contains the main loop that acts as a command prompt
+
 #include "song.h"
 #include "library.h"
 #include "helpers.h"
 
+// main setup and loop
 int main(int argc, char* argv[]) {
+    // setup
     if (argc != 2) {
         printf("Usage: ./database [library_name].txt\n");
         printf("The program will create a new library at the path if none exists.\n");
@@ -18,6 +23,7 @@ int main(int argc, char* argv[]) {
     printf("Welcome to SongDatabase, use \"help\" for help and \"quit\" to quit.\n");
     printf("Song names must be under %d chars and tags must be %d or fewer and less than %d chars.\n", MAX_NAME_LENGTH, MAX_TAGS, MAX_TAG_LENGTH);
 
+    // main loop, takes input then checks that input across known commands
     while (1) {
         printf("> ");
         fgets(buffer, sizeof(buffer), stdin);
@@ -33,11 +39,7 @@ int main(int argc, char* argv[]) {
 
         char* song = strtok(NULL, " ");
 
-        // potential start to code that would allow spaces in song/tag names
-        // if (strchr(song, '\"') == NULL) { 
-        //     strcat(song, strtok(ptr, "\""));
-        // }
-
+        // uses hashing function to allow a switch statement to operate on strings
         switch(djb2Hash(command)) {
             case Q:
             case QUIT:
@@ -111,7 +113,7 @@ int main(int argc, char* argv[]) {
                 break;
             case PL:
             case PLAYLIST:
-                if (strcmp(song, "strictly") != 0 && strcmp(song, "any") != 0) {
+                if (song == NULL || (strcmp(song, "strictly") != 0 && strcmp(song, "any") != 0)) {
                     printf("Usage: playlist [strictly|any] [tags...]\n");
                 } else {
                     Library* c;

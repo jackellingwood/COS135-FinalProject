@@ -1,6 +1,3 @@
-run: database
-	./database newLib.txt
-
 database: main.o song.o library.o helpers.o
 	gcc main.o song.o library.o helpers.o -o database
 
@@ -22,6 +19,9 @@ clean:
 	rm song.o
 	rm library.o
 	rm main.o
+
+run: 
+	./database newLib.txt
 
 val:
 	valgrind ./database newLib.txt
