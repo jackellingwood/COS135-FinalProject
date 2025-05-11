@@ -198,7 +198,7 @@ void saveToFile(Library* library, char* path) {
     for (int i = 0; i < library->size; i++) {
         Song* songToAdd = library->songs[i];
         fprintf(f, "%s:", songToAdd->name);
-        if (songToAdd->numTags > 1) {
+        if (songToAdd->numTags >= 1) {
             for (int i = 0; i < songToAdd->numTags - 1; i++) {
                 fprintf(f, "%s,", songToAdd->tags[i]);
             }
